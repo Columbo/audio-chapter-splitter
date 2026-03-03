@@ -180,6 +180,7 @@ def detect_chapter_times(
     min_distance_between_chapters: float,
 ) -> list[float]:
     librosa = import_module("librosa")
+    np = import_module("numpy")
 
     chapter_times: list[float] = []
     n_frames = chroma.shape[1]
