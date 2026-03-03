@@ -44,7 +44,7 @@ class IntegrationTests(unittest.TestCase):
 
             self.assertEqual(exit_code, 0, stderr_buffer.getvalue())
 
-            chapter_files = sorted(output_dir.glob("kapitel_*.wav"))
+            chapter_files = sorted(output_dir.glob("chapter_*.wav"))
             self.assertGreaterEqual(len(chapter_files), 2)
 
 

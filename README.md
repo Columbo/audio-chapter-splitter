@@ -33,9 +33,9 @@ This is useful when the story contains repeated audio cues between chapters.
 
 Example:
 
-- record a full children's story in Audacity and export it as one long `hoerspiel.mp3`
-- cut out a short `trennmelodie.mp3` clip that appears between chapters
-- optionally cut out a `titelsong.mp3` clip if the title melody also repeats at useful positions
+- record a full children's story in Audacity and export it as one long `story.mp3`
+- cut out a short `divider-melody.mp3` clip that appears between chapters
+- optionally cut out a `title-theme.mp3` clip if the title melody also repeats at useful positions
 
 The script scans the full story file, detects these repeated divider melodies, and writes chapter files into an output folder.
 
@@ -135,8 +135,8 @@ export PATH="/opt/ffmpeg/bin:$PATH"
 
 If you want a quick setup helper instead of installing manually:
 
-- Windows: run `setup_hoerspiel_env.bat`
-- Linux or macOS: run `sh setup_hoerspiel_env.sh`
+- Windows: run `setup_story_env.bat`
+- Linux or macOS: run `sh setup_story_env.sh`
 
 Both scripts create a virtual environment in `venv/` and install the Python dependencies from `requirements.txt`.
 
@@ -145,12 +145,12 @@ Both scripts create a virtual environment in `venv/` and install the Python depe
 The script now accepts file paths through CLI arguments, so your audio files do not need fixed names.
 You need:
 
-- one main audio file, for example `hoerspiel.mp3`
-- one or more reference clips, for example `trennmelodie.mp3` and `titelsong.mp3`
+- one main audio file, for example `story.mp3`
+- one or more reference clips, for example `divider-melody.mp3` and `title-theme.mp3`
 
 By default, output is written to:
 
-- `kapitel_ref/`
+- `chapter_output/`
 
 ## Usage
 
@@ -158,10 +158,10 @@ Run the script with your input file and one or more reference clips:
 
 ```bash
 audio-chapter-splitter \
-  --input hoerspiel.mp3 \
-  --reference trennmelodie.mp3 \
-  --reference titelsong.mp3 \
-  --output kapitel_ref \
+  --input story.mp3 \
+  --reference divider-melody.mp3 \
+  --reference title-theme.mp3 \
+  --output chapter_output \
   --output-format mp3
 ```
 
@@ -176,7 +176,7 @@ audio-chapter-splitter --help
 You can still run it directly without installing the console script:
 
 ```bash
-python split_audio_by_reference.py --input hoerspiel.mp3 --reference trennmelodie.mp3
+python split_audio_by_reference.py --input story.mp3 --reference divider-melody.mp3
 ```
 
 ## Example Terminal Output
@@ -184,11 +184,11 @@ python split_audio_by_reference.py --input hoerspiel.mp3 --reference trennmelodi
 Example run:
 
 ```text
-$ audio-chapter-splitter --input hoerspiel.mp3 --reference trennmelodie.mp3 --reference titelsong.mp3 --output kapitel_ref
+$ audio-chapter-splitter --input story.mp3 --reference divider-melody.mp3 --reference title-theme.mp3 --output chapter_output
 Progress: [########################################] 100% ETA: 0s
-Saved chapter 1: kapitel_ref/kapitel_1.mp3
-Saved chapter 2: kapitel_ref/kapitel_2.mp3
-Saved chapter 3: kapitel_ref/kapitel_3.mp3
+Saved chapter 1: chapter_output/chapter_1.mp3
+Saved chapter 2: chapter_output/chapter_2.mp3
+Saved chapter 3: chapter_output/chapter_3.mp3
 ```
 
 This gives you separate chapter files that can be copied to your playback device instead of one long story file.
@@ -210,7 +210,7 @@ Important CLI options:
 
 - The script works best when chapter boundaries contain a clearly repeated audio cue.
 - If the reference clip is noisy or inconsistent, detection may be inaccurate.
-- The current implementation exports chapter files as `kapitel_1.mp3`, `kapitel_2.mp3`, and so on.
+- The current implementation exports chapter files as `chapter_1.mp3`, `chapter_2.mp3`, and so on.
 - If no divider melody is detected, the script exports the full audio as a single chapter file.
 
 ## Legal Note

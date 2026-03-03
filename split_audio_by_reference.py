@@ -9,7 +9,7 @@ from importlib import import_module
 from pathlib import Path
 
 
-DEFAULT_OUTPUT_DIR = "kapitel_ref"
+DEFAULT_OUTPUT_DIR = "chapter_output"
 DEFAULT_MIN_DISTANCE = 3.0
 DEFAULT_HOP_LENGTH = 512
 DEFAULT_THRESHOLD_SCALE = 0.9
@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--input",
         required=True,
-        help="Path to the main audio file, for example hoerspiel.mp3.",
+        help="Path to the main audio file, for example story.mp3.",
     )
     parser.add_argument(
         "--reference",
@@ -242,7 +242,7 @@ def export_chapters(
         start_ms = int(chapter_boundaries[idx] * 1000)
         end_ms = int(chapter_boundaries[idx + 1] * 1000)
         segment = audio[start_ms:end_ms]
-        filename = output_dir / f"kapitel_{idx + 1}.{output_format}"
+        filename = output_dir / f"chapter_{idx + 1}.{output_format}"
         segment.export(filename, format=output_format)
         print(f"Saved chapter {idx + 1}: {filename}")
 
