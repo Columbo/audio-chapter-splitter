@@ -13,10 +13,33 @@ permissions:
   pull-requests: write
 
 jobs:
-  enable-auto-merge:
+  detect-workflow-changes:
     if: >
       github.event.pull_request.user.login == 'dependabot[bot]' &&
       github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    outputs:
+      touches_workflows: ${{ steps.changed-files.outputs.any_changed }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Detect workflow file changes
+        id: changed-files
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            .github/workflows/**
+
+  enable-auto-merge:
+    needs: detect-workflow-changes
+    if: >
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.event.pull_request.draft == false &&
+      needs.detect-workflow-changes.outputs.touches_workflows != 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -25,3 +48,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+
+  skip-workflow-prs:
+    needs: detect-workflow-changes
+    if: >
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.event.pull_request.draft == false &&
+      needs.detect-workflow-changes.outputs.touches_workflows == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Skip auto-merge for workflow changes
+        run: echo "Skipping auto-merge because this Dependabot PR modifies files under .github/workflows/."
