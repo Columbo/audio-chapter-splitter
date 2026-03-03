@@ -16,7 +16,14 @@ This script helps by finding recurring audio markers, for example a title song o
 
 ## How It Works
 
-The script compares the full story audio against one or more short reference audio files.
+My workflow starts outside Python:
+
+1. I record or prepare the full story as one long audio file in Audacity.
+2. In Audacity, I listen for short sections that repeat throughout the story, for example the title melody or short transition melodies between chapters.
+3. I export those short repeated sections as separate MP3 files.
+4. These short files become the reference clips, or "divider melodies", that the script searches for.
+
+The script compares the full story audio against one or more of these short reference audio files.
 When it detects a strong match, it treats that point as a chapter boundary.
 It then exports each chapter as its own MP3 file.
 
@@ -26,11 +33,11 @@ This is useful when the story contains repeated audio cues between chapters.
 
 Example:
 
-- one long `hoerspiel.mp3` file
-- a short `trennmelodie.mp3` clip that appears between chapters
-- optionally a `titelsong.mp3` clip that also marks boundaries
+- record a full children's story in Audacity and export it as one long `hoerspiel.mp3`
+- cut out a short `trennmelodie.mp3` clip that appears between chapters
+- optionally cut out a `titelsong.mp3` clip if the title melody also repeats at useful positions
 
-The script scans the full file, detects these repeated markers, and writes chapter files into an output folder.
+The script scans the full story file, detects these repeated divider melodies, and writes chapter files into an output folder.
 
 ## Requirements
 
