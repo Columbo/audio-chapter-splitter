@@ -1,14 +1,45 @@
 @echo off
-SET PYTHON_PATH=C:\Users\Christoph\Documents\Hoerspiel\Python-3.13.9\python.exe
-SET FFMPEG_PATH="C:\Users\Christoph\Documents\Hoerspiel\ffmpeg-8.0-full_build\bin
-SET PROJECT_DIR=%~dp0
-SET VENV_DIR=%PROJECT_DIR%venv
+setlocal
 
-"%PYTHON_PATH%" -m venv "%VENV_DIR%"
-SET ACTIVATE_FILE=%VENV_DIR%\Scripts\activate.bat
-echo set PATH=%FFMPEG_PATH%;%%PATH%% >> "%ACTIVATE_FILE%"
-CALL "%ACTIVATE_FILE%"
-pip install --upgrade pip
-pip install librosa pydub numpy
-echo Umgebung ist bereit. Du kannst jetzt dein Skript ausführen.
+if "%PYTHON_BIN%"=="" set "PYTHON_BIN=python"
+if "%FFMPEG_BIN_DIR%"=="" (
+    echo FFMPEG_BIN_DIR is not set. Assuming ffmpeg is already available on PATH.
+) else (
+    set "PATH=%FFMPEG_BIN_DIR%;%PATH%"
+)
 
+set "PROJECT_DIR=%~dp0"
+if "%PROJECT_DIR:~-1%"=="\" set "PROJECT_DIR=%PROJECT_DIR:~0,-1%"
+set "VENV_DIR=%PROJECT_DIR%\venv"
+
+where "%PYTHON_BIN%" >nul 2>nul
+if errorlevel 1 (
+    echo Python executable not found: %PYTHON_BIN%
+    exit /b 1
+)
+
+"%PYTHON_BIN%" -m venv "%VENV_DIR%"
+if errorlevel 1 (
+    echo Failed to create the virtual environment.
+    exit /b 1
+)
+
+call "%VENV_DIR%\Scripts\activate.bat"
+if errorlevel 1 (
+    echo Failed to activate the virtual environment.
+    exit /b 1
+)
+
+python -m pip install --upgrade pip
+if errorlevel 1 (
+    echo Failed to upgrade pip.
+    exit /b 1
+)
+
+python -m pip install -r "%PROJECT_DIR%\requirements.txt"
+if errorlevel 1 (
+    echo Failed to install dependencies.
+    exit /b 1
+)
+
+echo Environment is ready. You can now run the script.

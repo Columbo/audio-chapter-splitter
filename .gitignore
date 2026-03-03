@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.wav
+*.mp3
+
+venv/
+kapitel_ref/
+
+.idea/
+.vscode/
+.DS_Store
+
+.pytest_cache/

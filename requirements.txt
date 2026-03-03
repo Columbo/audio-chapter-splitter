@@ -1,3 +1,3 @@
-librosa
-numpy
-pydub
+librosa>=0.10,<1.0
+numpy>=1.26,<3.0
+pydub>=0.25,<1.0

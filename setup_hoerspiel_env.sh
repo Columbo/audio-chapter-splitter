@@ -7,6 +7,11 @@ FFMPEG_BIN_DIR="${FFMPEG_BIN_DIR:-}"
 PROJECT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 VENV_DIR="$PROJECT_DIR/venv"
 
+if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
+    echo "Python executable not found: $PYTHON_BIN" >&2
+    exit 1
+fi
+
 "$PYTHON_BIN" -m venv "$VENV_DIR"
 
 # Activate the virtual environment for the current shell.
@@ -17,7 +22,7 @@ if [ -n "$FFMPEG_BIN_DIR" ]; then
     export PATH="$FFMPEG_BIN_DIR:$PATH"
 fi
 
-pip install --upgrade pip
-pip install -r "$PROJECT_DIR/requirements.txt"
+python -m pip install --upgrade pip
+python -m pip install -r "$PROJECT_DIR/requirements.txt"
 
 echo "Environment is ready. You can now run the script."

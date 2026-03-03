@@ -127,48 +127,63 @@ export PATH="/opt/ffmpeg/bin:$PATH"
 4. Reload the configuration with `source ~/.bashrc` or open a new terminal.
 5. Run `ffmpeg -version` to verify it works.
 
+If you want a quick setup helper instead of installing manually:
+
+- Windows: run `setup_hoerspiel_env.bat`
+- Linux or macOS: run `sh setup_hoerspiel_env.sh`
+
+Both scripts create a virtual environment in `venv/` and install the Python dependencies from `requirements.txt`.
+
 ## Files Expected By The Script
 
-By default, the script currently expects these files in the project folder:
+The script now accepts file paths through CLI arguments, so your audio files do not need fixed names.
+You need:
 
-- `hoerspiel.mp3` for the full story
-- `trennmelodie.mp3` for a reference clip
-- `titelsong.mp3` for a reference clip
+- one main audio file, for example `hoerspiel.mp3`
+- one or more reference clips, for example `trennmelodie.mp3` and `titelsong.mp3`
 
-Output is written to:
+By default, output is written to:
 
 - `kapitel_ref/`
 
 ## Usage
 
-1. Put your full story MP3 into the project folder.
-2. Add one or more short reference clips that occur at chapter boundaries.
-3. Adjust the filenames in `split_audio_by_reference.py` if your files use different names.
-4. Run:
+Run the script with your input file and one or more reference clips:
 
 ```bash
-python split_audio_by_reference.py
+python split_audio_by_reference.py \
+  --input hoerspiel.mp3 \
+  --reference trennmelodie.mp3 \
+  --reference titelsong.mp3 \
+  --output kapitel_ref
 ```
 
 The script will export separate chapter MP3 files into the output folder.
 
+You can inspect all available options with:
+
+```bash
+python split_audio_by_reference.py --help
+```
+
 ## Configuration
 
-The script is currently configured directly in the Python file.
-You can change:
+Important CLI options:
 
-- input file name
-- reference file names
-- output folder
-- minimum distance between chapter markers
-- matching behavior
+- `--input` for the main audio file
+- `--reference` for each divider melody
+- `--output` for the export folder
+- `--min-distance` for the minimum gap between detected chapter markers
+- `--hop-length` for chroma analysis tuning
+- `--threshold-scale` for detection sensitivity
+- `--keep-temp` to keep the temporary WAV file for debugging
 
 ## Limitations
 
 - The script works best when chapter boundaries contain a clearly repeated audio cue.
 - If the reference clip is noisy or inconsistent, detection may be inaccurate.
-- The project is currently tailored to a manual workflow rather than a polished command-line tool.
-- The included setup batch file may need to be adapted to your local machine.
+- The current implementation exports chapter files as `kapitel_1.mp3`, `kapitel_2.mp3`, and so on.
+- If no divider melody is detected, the script exports the full audio as a single chapter file.
 
 ## Legal Note
 
