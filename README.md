@@ -55,6 +55,78 @@ pip install -r requirements.txt
 
 You also need `ffmpeg` installed separately on your system, because it is not a Python package and is required by `pydub` for MP3 handling.
 
+To install `ffmpeg`:
+
+- Official download page: <https://ffmpeg.org/download.html>
+
+- Windows:
+  - the official FFmpeg project links to Windows builds here: <https://www.gyan.dev/ffmpeg/builds/>
+  - extract it to a local folder
+  - add the `bin` folder containing `ffmpeg.exe` to your system `PATH`
+  - example: if you extracted FFmpeg to `C:\tools\ffmpeg`, add `C:\tools\ffmpeg\bin` to your `PATH`
+- macOS:
+  - install it with Homebrew using `brew install ffmpeg`
+- Linux:
+  - install it with your package manager, for example `sudo apt install ffmpeg`
+
+To verify the installation, run:
+
+```bash
+ffmpeg -version
+```
+
+If that command prints version information, `ffmpeg` is installed correctly and available on your `PATH`.
+
+On Windows, extending the `PATH` variable means adding the folder that contains `ffmpeg.exe` to the list of folders that Windows searches when you run commands in a terminal.
+
+Example:
+
+- if `ffmpeg.exe` is located in `C:\tools\ffmpeg\bin`
+- add `C:\tools\ffmpeg\bin` to the `PATH` variable
+- then you can run `ffmpeg -version` from any terminal window without typing the full file path
+
+Typical Windows steps:
+
+1. Open the Start menu and search for `Environment Variables`.
+2. Open `Edit the system environment variables`.
+3. Click `Environment Variables...`.
+4. Under `User variables` or `System variables`, select `Path`.
+5. Click `Edit`.
+6. Click `New`.
+7. Paste the full path to the FFmpeg `bin` folder, for example `C:\tools\ffmpeg\bin`.
+8. Confirm with `OK` in all open dialogs.
+9. Open a new terminal window and run `ffmpeg -version`.
+
+On Linux, extending the `PATH` variable means adding the folder that contains the `ffmpeg` executable to the list of folders your shell searches when you run commands.
+
+In many Linux installations, `ffmpeg` is installed by the package manager into a standard location and no manual `PATH` change is needed.
+If you install a custom build in a separate folder, you may need to add that folder yourself.
+
+Example:
+
+- if the `ffmpeg` executable is located in `/opt/ffmpeg/bin`
+- add `/opt/ffmpeg/bin` to your `PATH`
+- then you can run `ffmpeg -version` from any terminal window without typing the full file path
+
+Temporary change for the current terminal session:
+
+```bash
+export PATH="/opt/ffmpeg/bin:$PATH"
+```
+
+Persistent change for future terminal sessions:
+
+1. Open your shell configuration file, for example `~/.bashrc` or `~/.zshrc`.
+2. Add this line:
+
+```bash
+export PATH="/opt/ffmpeg/bin:$PATH"
+```
+
+3. Save the file.
+4. Reload the configuration with `source ~/.bashrc` or open a new terminal.
+5. Run `ffmpeg -version` to verify it works.
+
 ## Files Expected By The Script
 
 By default, the script currently expects these files in the project folder:
