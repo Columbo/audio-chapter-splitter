@@ -17,14 +17,41 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install PDM
         run: |
           python -m pip install --upgrade pip
-          python -m pip install .
-          python -m pip install build
+          python -m pip install pdm
+
+      - name: Install project dependencies
+        run: python -m pdm install -G docs
+
+      - name: Verify dependency declarations match expected exports
+        run: |
+          python - <<'PY'
+          import tomllib
+          from pathlib import Path
+          
+          data = tomllib.loads(Path("pyproject.toml").read_text())
+          combined = sorted(
+              set(data["project"]["dependencies"] + data["project"]["optional-dependencies"]["docs"]),
+              key=str.lower,
+          )
+          
+          def load_requirements(path):
+              lines = []
+              for line in Path(path).read_text().splitlines():
+                  line = line.strip()
+                  if not line or line.startswith("#"):
+                      continue
+                  lines.append(line)
+              return sorted(lines, key=str.lower)
+          
+          if load_requirements("requirements.txt") != combined:
+              raise SystemExit("requirements.txt is out of sync with pyproject.toml runtime/docs dependencies")
+          PY
 
       - name: Run unit tests
-        run: python -m unittest discover -s tests -v
+        run: python -m pdm run python -m unittest discover -s tests -v
 
       - name: Build package
-        run: python -m build
+        run: python -m pdm build

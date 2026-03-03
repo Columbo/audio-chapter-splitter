@@ -41,7 +41,7 @@ The script scans the full story file, detects these repeated divider melodies, a
 
 ## Requirements
 
-- Python 3
+- Python 3.11-3.14
 - `ffmpeg` installed and available on your system `PATH`
 - Python dependencies from `requirements.txt`
 
@@ -57,6 +57,39 @@ Or install the project as a local package with its console entry point:
 
 ```bash
 pip install .
+```
+
+If you also want to run the documentation / explainer animation scripts, install:
+
+```bash
+pip install -r requirements.txt
+```
+
+This project also supports `pdm` for dependency management and packaging.
+If you use `pdm`, it becomes the source of truth for dependencies defined in `pyproject.toml`.
+The checked-in `requirements.txt` is a compatibility file.
+
+Typical `pdm` workflow:
+
+```bash
+python -m pdm install -G docs
+python -m pdm run python -m unittest discover -s tests -v
+python -m pdm build
+```
+
+If you use Python 3.14, refresh the lock file before installing so `pdm` resolves versions that publish 3.14 wheels:
+
+```bash
+python -m pdm lock --refresh
+python -m pdm install -G docs
+```
+
+The previous install failure on Windows was caused by older locked versions (for example `numpy==2.2.6` and `scipy==1.15.3`) that predate Python 3.14 wheel support, so `pdm` tried to build them from source. This project now targets Python 3.11+ so the lock can use the newer NumPy/SciPy lines that publish 3.14 wheels.
+
+To refresh the compatibility file from `pyproject.toml`, run:
+
+```bash
+python -m pdm export --prod --without-hashes -G docs -o requirements.txt
 ```
 
 You also need `ffmpeg` installed separately on your system, because it is not a Python package and is required by `pydub` for MP3 handling.
@@ -155,6 +188,7 @@ By default, output is written to:
 The repository also contains `docs/sliding_window_explainer_animation.py`.
 This script is only used to generate a visual explainer animation for documentation and presentation purposes.
 It is not required to run the actual audio chapter splitter.
+The checked-in `requirements.txt` already includes the extra packages needed to run it.
 
 ## Usage
 

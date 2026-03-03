@@ -6,6 +6,9 @@ __pycache__/
 *.mp4
 
 venv/
+.venv/
+.pdm-python
+__pypackages__/
 chapter_output/
 build/
 dist/
