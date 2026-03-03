@@ -152,6 +152,10 @@ By default, output is written to:
 
 - `chapter_output/`
 
+The repository also contains `docs/sliding_window_explainer_animation.py`.
+This script is only used to generate a visual explainer animation for documentation and presentation purposes.
+It is not required to run the actual audio chapter splitter.
+
 ## Usage
 
 Run the script with your input file and one or more reference clips:

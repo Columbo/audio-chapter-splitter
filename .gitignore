@@ -2,9 +2,14 @@ __pycache__/
 *.py[cod]
 *.wav
 *.mp3
+*.gif
+*.mp4
 
 venv/
-kapitel_ref/
+chapter_output/
+build/
+dist/
+*.egg-info/
 
 .idea/
 .vscode/
