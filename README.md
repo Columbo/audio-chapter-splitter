@@ -91,6 +91,12 @@ You can change:
 - The project is currently tailored to a manual workflow rather than a polished command-line tool.
 - The included setup batch file may need to be adapted to your local machine.
 
+## Legal Note
+
+This tool is intended for processing audio that you created yourself or are otherwise authorized to use.
+You are responsible for ensuring that your use of any source audio complies with applicable copyright, licensing, and platform rules.
+This project is not affiliated with or endorsed by tonies.
+
 ## Why This Project Exists
 
 This is a practical tool built for a real family use case: turning long children's audio stories into chapter-based tracks that are easier for children to control on a Toniebox.
