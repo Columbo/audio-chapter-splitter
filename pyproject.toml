@@ -1,6 +1,6 @@
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "audio-chapter-splitter"
@@ -42,11 +42,5 @@ docs = [
 [project.scripts]
 audio-chapter-splitter = "split_audio_by_reference:main"
 
-[dependency-groups]
-dev = [
-  "build>=1.2,<2.0",
-  "pdm>=2.19,<3.0",
-]
-
-[tool.pdm.build]
-source-includes = ["tests/", "docs/"]
+[tool.setuptools]
+py-modules = ["split_audio_by_reference"]

@@ -7,8 +7,6 @@ __pycache__/
 
 venv/
 .venv/
-.pdm-python
-__pypackages__/
 chapter_output/
 build/
 dist/

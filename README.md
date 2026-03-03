@@ -65,32 +65,19 @@ If you also want to run the documentation / explainer animation scripts, install
 pip install -r requirements.txt
 ```
 
-This project also supports `pdm` for dependency management and packaging.
-If you use `pdm`, it becomes the source of truth for dependencies defined in `pyproject.toml`.
-The checked-in `requirements.txt` is a compatibility file.
+This project uses a simple `pip` + `requirements.txt` workflow so GitHub Dependabot can manage dependency update pull requests directly.
 
-Typical `pdm` workflow:
+Typical workflow:
 
 ```bash
-python -m pdm install -G docs
-python -m pdm run python -m unittest discover -s tests -v
-python -m pdm build
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install build
+python -m unittest discover -s tests -v
+python -m build
 ```
 
-If you use Python 3.14, refresh the lock file before installing so `pdm` resolves versions that publish 3.14 wheels:
-
-```bash
-python -m pdm lock --refresh
-python -m pdm install -G docs
-```
-
-The previous install failure on Windows was caused by older locked versions (for example `numpy==2.2.6` and `scipy==1.15.3`) that predate Python 3.14 wheel support, so `pdm` tried to build them from source. This project now targets Python 3.11+ so the lock can use the newer NumPy/SciPy lines that publish 3.14 wheels.
-
-To refresh the compatibility file from `pyproject.toml`, run:
-
-```bash
-python -m pdm export --prod --without-hashes -G docs -o requirements.txt
-```
+If you update dependency versions, update `requirements.txt` directly.
 
 You also need `ffmpeg` installed separately on your system, because it is not a Python package and is required by `pydub` for MP3 handling.
 
