@@ -53,6 +53,12 @@ Install the Python dependencies with:
 pip install -r requirements.txt
 ```
 
+Or install the project as a local package with its console entry point:
+
+```bash
+pip install .
+```
+
 You also need `ffmpeg` installed separately on your system, because it is not a Python package and is required by `pydub` for MP3 handling.
 
 To install `ffmpeg`:
@@ -151,11 +157,12 @@ By default, output is written to:
 Run the script with your input file and one or more reference clips:
 
 ```bash
-python split_audio_by_reference.py \
+audio-chapter-splitter \
   --input hoerspiel.mp3 \
   --reference trennmelodie.mp3 \
   --reference titelsong.mp3 \
-  --output kapitel_ref
+  --output kapitel_ref \
+  --output-format mp3
 ```
 
 The script will export separate chapter MP3 files into the output folder.
@@ -163,8 +170,28 @@ The script will export separate chapter MP3 files into the output folder.
 You can inspect all available options with:
 
 ```bash
-python split_audio_by_reference.py --help
+audio-chapter-splitter --help
 ```
+
+You can still run it directly without installing the console script:
+
+```bash
+python split_audio_by_reference.py --input hoerspiel.mp3 --reference trennmelodie.mp3
+```
+
+## Example Terminal Output
+
+Example run:
+
+```text
+$ audio-chapter-splitter --input hoerspiel.mp3 --reference trennmelodie.mp3 --reference titelsong.mp3 --output kapitel_ref
+Progress: [########################################] 100% ETA: 0s
+Saved chapter 1: kapitel_ref/kapitel_1.mp3
+Saved chapter 2: kapitel_ref/kapitel_2.mp3
+Saved chapter 3: kapitel_ref/kapitel_3.mp3
+```
+
+This gives you separate chapter files that can be copied to your playback device instead of one long story file.
 
 ## Configuration
 
@@ -173,6 +200,7 @@ Important CLI options:
 - `--input` for the main audio file
 - `--reference` for each divider melody
 - `--output` for the export folder
+- `--output-format` for the exported chapter format (`mp3` or `wav`)
 - `--min-distance` for the minimum gap between detected chapter markers
 - `--hop-length` for chroma analysis tuning
 - `--threshold-scale` for detection sensitivity
@@ -190,6 +218,16 @@ Important CLI options:
 This tool is intended for processing audio that you created yourself or are otherwise authorized to use.
 You are responsible for ensuring that your use of any source audio complies with applicable copyright, licensing, and platform rules.
 This project is not affiliated with or endorsed by tonies.
+
+## Release Checklist
+
+Before publishing a new release:
+
+- run `python -m unittest discover -s tests -v`
+- run `python -m build`
+- verify `audio-chapter-splitter --help` works in a clean virtual environment
+- review the README example command and version number
+- create a git tag for the release, for example `v0.2.0`
 
 ## Why This Project Exists
 

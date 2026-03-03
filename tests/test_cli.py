@@ -46,6 +46,7 @@ class ValidateEnvironmentTests(unittest.TestCase):
                 min_distance=3.0,
                 hop_length=512,
                 threshold_scale=0.9,
+                output_format="wav",
             )
 
             split_audio_by_reference.validate_environment(args)
@@ -65,6 +66,7 @@ class ValidateEnvironmentTests(unittest.TestCase):
                 min_distance=3.0,
                 hop_length=512,
                 threshold_scale=0.9,
+                output_format="mp3",
             )
 
             with self.assertRaises(split_audio_by_reference.ConfigurationError):
@@ -85,6 +87,7 @@ class ValidateEnvironmentTests(unittest.TestCase):
                 min_distance=3.0,
                 hop_length=512,
                 threshold_scale=0.9,
+                output_format="wav",
             )
 
             with self.assertRaises(split_audio_by_reference.ConfigurationError):

@@ -13,6 +13,9 @@ DEFAULT_OUTPUT_DIR = "kapitel_ref"
 DEFAULT_MIN_DISTANCE = 3.0
 DEFAULT_HOP_LENGTH = 512
 DEFAULT_THRESHOLD_SCALE = 0.9
+DEFAULT_OUTPUT_FORMAT = "mp3"
+WAV_EXTENSIONS = {".wav", ".wave"}
+__version__ = "0.2.0"
 
 
 class ConfigurationError(Exception):
@@ -25,6 +28,11 @@ def build_parser() -> argparse.ArgumentParser:
             "Split a long audio file into chapter files by detecting repeated "
             "reference audio clips."
         )
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
     )
     parser.add_argument(
         "--input",
@@ -44,6 +52,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         default=DEFAULT_OUTPUT_DIR,
         help=f"Directory for exported chapter files. Default: {DEFAULT_OUTPUT_DIR}.",
+    )
+    parser.add_argument(
+        "--output-format",
+        default=DEFAULT_OUTPUT_FORMAT,
+        choices=("mp3", "wav"),
+        help=(
+            "Audio format for exported chapter files. "
+            f"Default: {DEFAULT_OUTPUT_FORMAT}."
+        ),
     )
     parser.add_argument(
         "--min-distance",
@@ -98,10 +115,18 @@ def validate_environment(args: argparse.Namespace) -> None:
         missing = ", ".join(missing_references)
         raise ConfigurationError(f"Reference audio file(s) not found: {missing}")
 
-    if shutil.which("ffmpeg") is None:
+    if requires_ffmpeg(args) and shutil.which("ffmpeg") is None:
         raise ConfigurationError(
             "ffmpeg is not available on PATH. Install ffmpeg and try again."
         )
+
+
+def requires_ffmpeg(args: argparse.Namespace) -> bool:
+    if args.output_format.lower() not in {"wav"}:
+        return True
+
+    all_input_files = [args.input, *args.reference]
+    return any(Path(file_path).suffix.lower() not in WAV_EXTENSIONS for file_path in all_input_files)
 
 
 def print_progress_eta(index: int, total: int, start_time: float, bar_length: int = 40) -> None:
@@ -201,6 +226,7 @@ def export_chapters(
     output_dir: Path,
     chapter_times: list[float],
     duration: float,
+    output_format: str,
 ) -> None:
     chapter_boundaries = [0.0] + sorted(chapter_times) + [duration]
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -215,8 +241,8 @@ def export_chapters(
         start_ms = int(chapter_boundaries[idx] * 1000)
         end_ms = int(chapter_boundaries[idx + 1] * 1000)
         segment = audio[start_ms:end_ms]
-        filename = output_dir / f"kapitel_{idx + 1}.mp3"
-        segment.export(filename, format="mp3")
+        filename = output_dir / f"kapitel_{idx + 1}.{output_format}"
+        segment.export(filename, format=output_format)
         print(f"Saved chapter {idx + 1}: {filename}")
 
 
@@ -272,6 +298,7 @@ def split_audio(args: argparse.Namespace) -> None:
             output_dir=Path(args.output),
             chapter_times=chapter_times,
             duration=duration,
+            output_format=args.output_format,
         )
     except CouldntDecodeError as exc:
         raise ConfigurationError(
