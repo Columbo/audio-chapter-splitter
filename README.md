@@ -42,11 +42,18 @@ The script scans the full story file, detects these repeated divider melodies, a
 ## Requirements
 
 - Python 3
-- `ffmpeg` installed and available on your system
-- Python packages:
-  - `numpy`
-  - `librosa`
-  - `pydub`
+- `ffmpeg` installed and available on your system `PATH`
+- Python dependencies from `requirements.txt`
+
+## Installation
+
+Install the Python dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+You also need `ffmpeg` installed separately on your system, because it is not a Python package and is required by `pydub` for MP3 handling.
 
 ## Files Expected By The Script
 
