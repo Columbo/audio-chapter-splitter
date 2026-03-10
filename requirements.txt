@@ -5,21 +5,21 @@ audioop-lts==0.2.2; python_version >= "3.13"
 audioread==3.1.0
 certifi==2026.2.25
 cffi==2.0.0
-charset-normalizer==3.4.4
+charset-normalizer==3.4.5
 decorator==5.2.1
 idna==3.11
-imageio==2.37.2
+imageio==2.37.3
 imageio-ffmpeg==0.6.0
 joblib==1.5.3
-lazy-loader==0.4
+lazy-loader==0.5
 librosa==0.11.0
 llvmlite==0.46.0
 msgpack==1.1.2
 numba==0.64.0
-numpy==2.4.2
+numpy==2.4.3
 packaging==26.0
 pillow==12.1.1
-platformdirs==4.9.2
+platformdirs==4.9.4
 pooch==1.9.0
 pycparser==3.0; implementation_name != "PyPy"
 pydub==0.25.1
