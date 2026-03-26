@@ -23,7 +23,7 @@ platformdirs==4.9.4
 pooch==1.9.0
 pycparser==3.0; implementation_name != "PyPy"
 pydub==0.25.1
-requests==2.32.5
+requests==2.33.0
 scikit-learn==1.8.0
 scipy==1.17.1
 soundfile==0.13.1
