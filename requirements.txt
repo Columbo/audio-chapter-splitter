@@ -7,7 +7,7 @@ certifi==2026.5.20
 cffi==2.0.0
 charset-normalizer==3.4.7
 decorator==5.3.1
-idna==3.16
+idna==3.18
 imageio==2.37.3
 imageio-ffmpeg==0.6.0
 joblib==1.5.3
@@ -19,12 +19,12 @@ numba==0.65.1
 numpy==2.4.6
 packaging==26.2
 pillow==12.2.0
-platformdirs==4.9.6
+platformdirs==4.10.0
 pooch==1.9.0
 pycparser==3.0; implementation_name != "PyPy"
 pydub==0.25.1
 requests==2.34.2
-scikit-learn==1.8.0
+scikit-learn==1.9.0
 scipy==1.17.1
 soundfile==0.13.1
 soxr==1.1.0
