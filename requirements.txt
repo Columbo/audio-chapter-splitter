@@ -8,7 +8,7 @@ cffi==2.1.1
 charset-normalizer==3.5.2
 decorator==5.3.1
 idna==3.20
-imageio==2.38.0
+imageio==2.38.1
 imageio-ffmpeg==0.6.0
 joblib==1.6.0
 lazy-loader==0.6
@@ -19,9 +19,9 @@ numba==0.68.0
 numpy==2.4.6
 packaging==26.3
 pillow==12.3.0
-platformdirs==4.12.2
+platformdirs==4.13.0
 pooch==1.9.0
-pycparser==3.0; implementation_name != "PyPy"
+pycparser==3.11; implementation_name != "PyPy"
 pydub==0.25.1
 requests==2.34.2
 scikit-learn==1.9.1
