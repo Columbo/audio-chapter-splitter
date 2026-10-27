@@ -3,7 +3,7 @@
 
 audioop-lts==0.2.2; python_version >= "3.13"
 audioread==3.1.0
-certifi==2026.10.19
+certifi==2026.10.23
 cffi==2.1.1
 charset-normalizer==3.5.2
 decorator==5.3.1
@@ -19,9 +19,9 @@ numba==0.68.0
 numpy==2.4.6
 packaging==26.3
 pillow==13.0.0
-platformdirs==4.13.4
+platformdirs==4.13.5
 pooch==1.9.0
-pycparser==3.11; implementation_name != "PyPy"
+pycparser==3.12; implementation_name != "PyPy"
 pydub==0.25.1
 requests==2.34.2
 scikit-learn==1.9.1
