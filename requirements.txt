@@ -9,7 +9,7 @@ charset-normalizer==3.5.2
 decorator==5.3.1
 idna==3.20
 imageio==2.38.1
-imageio-ffmpeg==0.7.0
+imageio-ffmpeg==0.8.1
 joblib==1.6.0
 lazy-loader==0.6
 librosa==0.11.0
@@ -19,7 +19,7 @@ numba==0.68.1
 numpy==2.4.6
 packaging==26.3
 pillow==13.0.0
-platformdirs==4.14.2
+platformdirs==4.14.5
 pooch==1.9.0
 pycparser==3.12; implementation_name != "PyPy"
 pydub==0.25.1
@@ -31,6 +31,6 @@ soxr==1.1.0
 standard-aifc==3.13.0; python_version >= "3.13"
 standard-chunk==3.13.0; python_version >= "3.13"
 standard-sunau==3.13.0; python_version >= "3.13"
-threadpoolctl==3.7.0
+threadpoolctl==3.8.0
 typing-extensions==4.16.0
 urllib3==2.8.0
